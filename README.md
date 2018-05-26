@@ -1,11 +1,4 @@
-# Medbot Server Admin
-
-A barebones Node.js app using express, socket.io, redis and d3 to perform data
-analysis of users' interaction with patientbot.
-
-## Setting up redis
-
-*Under construction*
+# Greenhack
 
 ## Running Locally
 
@@ -13,7 +6,7 @@ Make sure you have [Node.js](http://nodejs.org/) and the [Heroku CLI](https://cl
 
 ```
 $ git clone or clone your own fork
-$ cd medbot-server-admin
+$ cd greenhack
 $ npm install
 $ npm start
 ```
