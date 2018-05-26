@@ -1,0 +1,30 @@
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+</head>
+<body>
+  <!-- Header -->
+  <% include ../partials/nav.ejs %>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <div class="camera mt-3">
+          <video id="video" class="mb-2">Video stream not available.</video>
+          <br>
+          <button id="startbutton" class="btn btn-primary">Take photo</button>
+        </div>
+        <canvas id="canvas" class="d-none">
+        </canvas>
+        <div id="output" class="d-none">
+          <img id="photo" class="mb-2" data-stage="receipt" data-nextstage="summary" alt="The screen capture will appear in this box.">
+          <br>
+          <button id="savebutton" class="btn btn-success">Confirm and Save</button>
+        </div>
+        <!-- <input type="file" name="image" accept="image/*" capture="user"> -->
+        <h5>Step 3: Photo of Receipt</h5>
+      </div>
+    </div>
+  </div>
+  <script src="javascripts/photocapture.js"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+</head>
+<body>
+  <!-- Header -->
+  <% include ../partials/nav.ejs %>
+
+  <div class="container">
+
+    <div class="row mt-2">
+      <div class="col-md-12">
+        <a href="/farmer" class="btn btn-primary col-md-12 mb-2">
+          Add New Transaction
+        </a>
+        <button class="btn btn-secondary col-md-12 mb-2">
+          Claim Rewards: $1
+        </button>
+        <div class="mb-2">
+          <i class="text-muted">Previous Transactions</i>
+        </div>
+      </div>
+      <% for(var i=0; i<5; i++) { %>
+        <div class="col-md-12">
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="media">
+                <img class="align-self-start mr-3" src="holder.js/64x64" alt="Generic placeholder image">
+                <div class="media-body">
+                  <h5 class="mt-0">Person Name</h5>
+                  <span>Transaction Date<br>Transaction Details</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% } %>
+    </div>
+
+    <!--<script src="javascripts/main.js"></script> -->
+    <script src="javascripts/holder.js"></script>
+  </div>
+
+</body>
+</html>
