@@ -3,6 +3,7 @@ var app = express();
 var server = require('http').createServer(app);
 var bodyParser = require('body-parser');
 var fs = require('fs');
+var imageAPI = require('./image_api.js');
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -30,15 +31,32 @@ app.get('/receipt', function(request, response) {
   response.render('pages/receipt')
 });
 
+app.get('/summary', function(request, response) {
+  
+  receiptData = JSON.parse(fs.readFileSync('./public/json/receipt.json'));
+  farmerData = JSON.parse(fs.readFileSync('./public/json/farmer.json'));
+  harvestData = JSON.parse(fs.readFileSync('./public/json/harvest.json'));
+
+  response.render('pages/summary', 
+
+      { receipt: receiptData,
+        farmer: farmerData,
+        harvest: harvestData});
+});
+
 app.post('/savepicture', function(req, res){
-  // console.log(req.body);
-  // var img = req.body.photo;
   var stage = req.body.stage;
   var data = req.body.img.replace(/^data:image\/\w+;base64,/, "");
+  console.log("phototype to node:" + stage);
+
   var buf = new Buffer(data, 'base64');
+ // var callback = function(res){
+
+ // }
+  imageAPI.process(buf, stage, res);
   var filename = 'public/images/' + stage  + '.png';
   fs.writeFile(filename, buf);
-  res.send('success');
+
 });
 
 server.listen(app.get('port'), function() {
