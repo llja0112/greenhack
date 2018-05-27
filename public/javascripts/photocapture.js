@@ -1,3 +1,4 @@
+
 (function() {
   // The width and height of the captured photo. We will set the
   // width to the value defined here, but the height will be
@@ -18,6 +19,7 @@
   var canvas = null;
   var photo = null;
   var startbutton = null;
+  var phototype = null;
 
   function startup() {
     video = document.getElementById('video');
@@ -70,7 +72,7 @@
 
     startbutton.addEventListener('click', function(ev){
       takepicture();
-      $('#output').removeClass('d-none');
+      $('#canvas_wrapper').removeClass('d-none');
       ev.preventDefault();
     }, false);
     $('#savebutton').click(function(){
@@ -117,11 +119,57 @@
     var data = photo.getAttribute('src');
     var stage = $('#photo').data('stage');
     var nextstage = $('#photo').data('nextstage');
-    console.log(nextstage);
+
+    // This is the type of image to send to image_api.js: receipt, face, object
+    console.log("Phototype:", stage);
+
     $.post("/savepicture", {img: data, stage: stage})
-    .done(function(){
-      console.log('Photo posted');
-      window.location.replace('/' + nextstage);
+    .done(function(data){
+      var ctx = canvas.getContext('2d');
+
+      if (stage=="farmer"){
+        ctx.beginPath();
+        ctx.linewidth="20";
+        ctx.strokeStyle="red";
+        
+        v0 = data[0];
+        v2 = data[2];
+
+        ctx.rect(v0.x, v0.y, v2.x-v0.x, v2.y-v0.y);
+        ctx.stroke();
+
+      } else if (stage=="receipt"){
+        ctx.beginPath();
+        ctx.linewidth="20";
+        ctx.strokeStyle="green";
+
+        for (i=0; i<data['pages'][0]['blocks'].length; i++){
+
+          box = data['pages'][0]['blocks'][i];
+          vertices = box['boundingBox']['vertices'];
+          v0 = vertices[0];
+          v2 = vertices[2];
+
+          ctx.rect(v0.x, v0.y, v2.x-v0.x, v2.y-v0.y);
+          ctx.stroke();
+        }
+
+        alert(data['text']);
+                                              
+      } else if (stage=="harvest"){
+        var strx = ""
+        for (i=0; i<data.length; i++){
+          strx += '\n-- '+data[i].description
+        }
+        alert("Detected:"+strx);
+      }
+
+      console.log("savepicture:" + data[0]);
+      
+      setTimeout(function(){
+        window.location.replace('/' + nextstage);
+      }, 1200);
+
     });
   }
 
