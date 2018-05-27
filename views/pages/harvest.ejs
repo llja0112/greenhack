@@ -1,6 +1,7 @@
 <html>
 <head>
   <% include ../partials/header.ejs %>
+  <title>object</title>
 </head>
 <body>
   <!-- Header -->
@@ -13,12 +14,15 @@
           <br>
           <button id="startbutton" class="btn btn-primary">Take photo</button>
         </div>
-        <canvas id="canvas" class="d-none">
-        </canvas>
+        <div id="canvas_wrapper" class="d-none">
+          <canvas id="canvas">
+          </canvas>
+          <br>
+          <button id="savebutton" class="btn btn-success">Confirm and Save</button>
+        </div>
         <div id="output" class="d-none mt-3">
           <img id="photo" class="mb-2" data-stage="harvest" data-nextstage="receipt" alt="The screen capture will appear in this box.">
           <br>
-          <button id="savebutton" class="btn btn-success">Confirm and Save</button>
         </div>
         <!-- <input type="file" name="image" accept="image/*" capture="user"> -->
         <h5 class="mt-3">Step 2: Photo of harvest</h5>
