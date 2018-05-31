@@ -13,7 +13,7 @@
         <a href="/farmer" class="btn btn-primary col-md-12 mb-2">
           Add New Transaction
         </a>
-        <button class="btn btn-secondary col-md-12 mb-2">
+        <button id="rewards" class="btn btn-secondary col-md-12 mb-2">
           Claim Rewards: $1
         </button>
         <div class="mb-2">
@@ -23,15 +23,11 @@
       
       <div class="col-md-12">
         <div class="card mb-3">
+          <img class="align-self-start mr-3" src="/images/farmer.png" alt="image">
           <div class="card-body">
-            <div class="media">
-              <img class="align-self-start mr-3" src="/images/farmer.png" alt="image">
-              <div class="media-body">
-                <h5 class="mt-0">Sia</h5>
-                <span>Transaction Date: <%= filler %> 
-                  <br>Transaction Details: <%= receipt['text'] %></span>
-              </div>
-            </div>
+            <h5 class="mt-0">Sia</h5>
+            <span>Transaction Date: <%= date %> 
+            <br>Transaction Details: <%= receipt['text'] %></span>
           </div>
         </div>
       </div>
