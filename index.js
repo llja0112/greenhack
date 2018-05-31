@@ -36,15 +36,18 @@ app.get('/summary', function(request, response) {
   receiptData = JSON.parse(fs.readFileSync('./public/json/receipt.json'));
   farmerData = JSON.parse(fs.readFileSync('./public/json/farmer.json'));
   harvestData = JSON.parse(fs.readFileSync('./public/json/harvest.json'));
+  dateData = new Date();
 
   response.render('pages/summary', 
 
-      { receipt: receiptData,
+      { date: dateData, 
+        receipt: receiptData,
         farmer: farmerData,
         harvest: harvestData});
 });
 
-app.post('/savepicture', function(req, res){
+//app.post('/savepicture', function(req, res){
+app.post('/procpicture', function(req, res){
   var stage = req.body.stage;
   var data = req.body.img.replace(/^data:image\/\w+;base64,/, "");
   console.log("phototype to node:" + stage);
