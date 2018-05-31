@@ -29,9 +29,6 @@ $ git push heroku master
 $ heroku open
 ```
 
-## Todo
-* Do up look of summary page.
-* Reverse camera when taking photo of 'receipt' and 'harvest'.
+## Todo (Totally Optional)
 * Remove alerts text message in photocapture.js function savepicture()
-* Control image capture logic in photocapture.js function savepicture()
 * Improve title page naming.
