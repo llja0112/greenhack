@@ -12,14 +12,21 @@
         <div class="camera mt-3">
           <video id="video" class="mb-2">Video stream not available.</video>
           <br>
-          <button id="startbutton" class="btn btn-primary">Take photo</button>
+
+          <button id="flipbutton">
+            <span class="fa fa-refresh"></span>
+          </button>
+          <button type="button" id="startbutton" class="btn btn-primary">
+            <span class="fa fa-camera"></span>
+          Take photo</button>
         </div>
         <div id="canvas_wrapper" class="d-none">
-
           <canvas id="canvas">
           </canvas>
           <br>
-          <button id="savebutton" class="btn btn-success">Confirm and Save</button>
+          <button id="nextbutton" class="btn btn-success">
+            <span class="fa fa-check"></span>
+            Confirm Receipt Picture</button>
         </div>
         <div id="output" class="d-none mt-3">
           <img id="photo" class="mb-2" data-stage="receipt" data-nextstage="summary" alt="The screen capture will appear in this box.">
