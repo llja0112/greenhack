@@ -21,11 +21,12 @@
   var startbutton = null;
   var phototype = null;
 
-  function startup() {
+  function startup(vidface) {
     video = document.getElementById('video');
     canvas = document.getElementById('canvas');
     photo = document.getElementById('photo');
     startbutton = document.getElementById('startbutton');
+    console.log('vidface:', vidface);
 
     navigator.getMedia = ( navigator.getUserMedia ||
                            navigator.webkitGetUserMedia ||
@@ -34,7 +35,8 @@
 
     navigator.getMedia(
       {
-        video: true,
+        video: vidface,
+   //     video: { facingMode: { exact: 'environment'}},
         audio: false
       },
       function(stream) {
@@ -70,19 +72,32 @@
       }
     }, false);
 
-    startbutton.addEventListener('click', function(ev){
-      takepicture();
-      $('#canvas_wrapper').removeClass('d-none');
-      ev.preventDefault();
-    }, false);
-    $('#savebutton').click(function(){
-      console.log('save picture');
-      savepicture();
-    });
 
     clearphoto();
   }
 
+  function addButtonListeners(){
+    $('#flipbutton').click(function(){
+      console.log('flip button clicked');
+      var vidface = true; 
+      startup(vidface);
+    });
+
+    startbutton.addEventListener('click', function(ev){
+      takepicture();
+      $('#canvas_wrapper').removeClass('d-none');
+      processDrawPicture();
+
+      ev.preventDefault();
+    }, false);
+
+    $('#nextbutton').click(function(){
+      console.log('Confirm and go to next Stage');
+      nextstage();
+    });
+
+
+  }
   // Fill the photo with an indication that none has been
   // captured.
 
@@ -115,23 +130,22 @@
     }
   }
 
-  function savepicture(){
+  function processDrawPicture(){
     var data = photo.getAttribute('src');
     var stage = $('#photo').data('stage');
     var nextstage = $('#photo').data('nextstage');
 
-    // This is the type of image to send to image_api.js: receipt, face, object
     console.log("Phototype:", stage);
 
-    $.post("/savepicture", {img: data, stage: stage})
+    $.post("/procpicture", {img: data, stage: stage})
     .done(function(data){
       var ctx = canvas.getContext('2d');
-
+      
       if (stage=="farmer"){
         ctx.beginPath();
-        ctx.linewidth="20";
+        ctx.lineWidth=10;
         ctx.strokeStyle="red";
-        
+ 
         v0 = data[0];
         v2 = data[2];
 
@@ -164,16 +178,21 @@
         alert("Detected:"+strx);
       }
 
-      console.log("savepicture:" + data[0]);
-      
-      setTimeout(function(){
-        window.location.replace('/' + nextstage);
-      }, 1200);
+    })
+  }
 
-    });
+  function nextstage(){
+    var nextstage = $('#photo').data('nextstage');
+    window.location.replace('/' + nextstage);
+  
   }
 
   // Set up our event listener to run the startup process
   // once loading is complete.
-  window.addEventListener('load', startup, false);
+  window.addEventListener('load', function(){
+ //   var vidface = "true";  
+    var vidface = { facingMode: { exact: 'environment'}};
+    startup(vidface);
+    addButtonListeners();
+  }, false);
 })();
